@@ -1,4 +1,4 @@
-var app = angular.module('app',['ngRoute']);
+var app = angular.module('app',[]);
 
 app.config(['$routeProvider',
 	function($routeProvider) {
@@ -12,7 +12,7 @@ app.config(['$routeProvider',
 				controller: 'signInController'
 			}).
 			when('/Listings', {
-				templateUrl: 'views/add.html',
+				templateUrl: 'add.html',
 				controller: 'listingsController'
 			}).
 			when('/ViewProfile', {
@@ -28,7 +28,7 @@ app.config(['$routeProvider',
 				controller: 'buyController'
 			}).
 			when('/AddItem', {
-				templateUrl: 'views/add.html',
+				templateUrl: 'add.html',
 				controller: 'itemController'
 			}). 
 			otherwise({

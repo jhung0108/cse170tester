@@ -96,35 +96,34 @@
 	</style>
 </head>
 <body>
-
-	<div class="stickyheader">
-		<div class="logo-background"></div>
-		<div class="logo">GroupBuy</div>
-		<ul class="categories">
-			<li class="active"><a href="#">Listings</a></li>
-			<li><a href="#/AddItem">Add</a></li>
-			<li><a href="ViewProfile">Profile</a></li>
-		</ul>
-	</div>
-
-
 	<div class="container">
-			<div class="stickyheader">
-		<div class="logo-background"></div>
-		<div class="logo">GroupBuy</div>
-		<ul class="categories">
-			<li class="active"><a href="#">Listings</a></li>
-			<li><a href="#/AddItem">Add</a></li>
-			<li><a href="ViewProfile">Profile</a></li>
-		</ul>
-	</div>
-		<div ng-view></div>
+		<div class="content">
+			<div class="header">
+				<div class="logo">GroupBuy</div>
+				<div class="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, minus, obcaecati minima delectus fugiat doloribus.
+				</div>
+			</div>
+			<div class="footer">
+				<div class="menu">
+					<form class="form-reg">
+						<input type="text" placeholder="Email" class="form-control" id="email"/>
+						<br />
+						<!-- Icons don't work :(  -->
+						<!-- <span class="glyphicon glyphicon-user"></span>  -->
+						<input type="password" placeholder="Password" class="form-control" id="password"/>
+						<!-- <span class="glyphicon glyphicon-lock"></span> -->
+					</form>
+					<br>
+					<a href="#" class="btn btn-register btn-lg btn-outline">Sign Up</a>
+					<br>
+					<a href="#" class="btn btn-login btn-lg btn-outline">Sign In</a>
+				</div>
+			</div>
+		</div>
 	</div>
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script src="http://code.jquery.com/color/jquery.color-2.1.2.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular-route.min.js"></script>
-	<script type="text/javascript" src="js/mainController.js"></script>
+	<script src="/Backend"></script>
 	<script>
 	var signupclicked = false;
 	var signinclicked = false;
@@ -147,18 +146,23 @@
 		});
 		if (signupclicked === true)
 		{
-			var jqxhr = $.post( "/end/login", function() {
-			  alert( "success" );
-			})
+			// var jqxhr = $.post( "/end/login", function() {
+			//   alert( "success" );
+			// })
 
-			.done(function() {
-				// When done, want to redirect to listings page while logged in
-			    window.location.href = "items.html";
-			})
-			.fail(function() {
-			    alert("Failed to signup. Email in use! Pick another. ");
-			});
+			// .done(function() {
+			// 	// When done, want to redirect to listings page while logged in
+			//     window.location.href = "items.html";
+			// })
+			// .fail(function() {
+			//     alert("Failed to signup. Email in use! Pick another. ");
+			// });
 			// Request body parameters
+			$.post("/login", {
+				"username": document.getElementById('email').value;
+				"password": document.getElementById('password').value;
+			}, loginFunction);
+			window.location.href = "http://107.170.250.75/CSE170/frontend/items.html";
 		}
 		signupclicked = true;
 		evt.preventDefault;
@@ -188,23 +192,32 @@
 		$(".btn-register").next('br').remove();
 		if (signinclicked === true)
 		{
-			var jqxhr = $.post( "/end/login", function() {
-			  alert( "success" );
-			})
+			// var jqxhr = $.post( "/end/login", function() {
+			//   alert( "success" );
+			// })
 
-			.done(function() {
-				// When done, want to redirect to listings page while logged in
-			    window.location.href = "items.html";
-			})
-			.fail(function() {
-			    alert("Failed to Signin. Incorrect email or password. ");
-			});
+			// .done(function() {
+			// 	// When done, want to redirect to listings page while logged in
+			//     window.location.href = "items.html";
+			// })
+			// .fail(function() {
+			//     alert("Failed to Signin. Incorrect email or password. ");
+			// });
 			// Request body parameters
+			$.post("/login", {
+				"username": document.getElementById('email').value;
+				"password": document.getElementById('password').value;
+			}, loginFunction);
+			window.location.href = "http://107.170.250.75/CSE170/frontend/items.html";
 		}
 		signinclicked = true;
 		evt.preventDefault;
 
 	});
+
+	function loginFunction(result) {
+
+	}
 
 	</script>
 </body>

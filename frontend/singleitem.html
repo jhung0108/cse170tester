@@ -117,6 +117,10 @@
 		padding: 10px 35px;
 	}
 
+	#seller {
+		color: #599bb3;
+	}
+
 	</style>
 </head>
 <body>
@@ -126,7 +130,8 @@
 		<ul class="categories">
 			<li><a href="items.html">Listings</a></li>
 			<li><a href="add.html">Add</a></li>
-			<li><a href="profile.html">Profile</a></li>
+			<li><a href="profile.html">My Profile</a></li>
+			<li><a href="manage.html">Manage</a></li>
 		</ul>
 	</div>
 
@@ -134,11 +139,14 @@
 	<div ng-controller="ItemsDisplayCtrl">
 	<div class="content">
 		<h3 class="name" id="name">Kittens</h3>
-		<img id="imgsrc" class="input-group" src="http://placekitten.com.s3.amazonaws.com/homepage-samples/408/287.jpg">
+		<img id="imgsrc" class="input-group">
 		<div class="input-group">
 			<span class="labels">Description:</span>
 			<p id="desc">
 				Selling kittens! A whole litter of them.
+			</p>
+			<p>
+				<span class="labels"> Sold by: </span><span id="seller">Edward T. Hung</span> 
 			</p>
 			<p>
 				<span class="labels"> Original Price:</span> $<span id="origprice">500</span> 
@@ -149,7 +157,7 @@
 
 		</div>
 		<div class="input-group input-group-lg select">
-		  <a href="items.html" class="myButton">Buy!</a>
+		  <div class="myButton">Buy!</div>
 		</div>
 	</div>
 	</div>
@@ -165,10 +173,12 @@
 			var JSONinfo = $.cookie("listinginfo") ;
 			var JSONobj = JSON.parse(JSONinfo);
 
+			$("#imgsrc").attr("src", JSONobj.imgsrc);
 			$("#name").html(JSONobj.name);
 			$("#desc").html(JSONobj.desc);
 			$("#price").html(JSONobj.price);
 			$("#origprice").html(JSONobj.origprice);
+			$("#seller").html(JSONobj.seller);
 
 			// if the box for a min amount of buyers was checked
 			if (JSONobj.check === true) 
@@ -181,6 +191,76 @@
 				$("#minnum").html(JSONobj.minnum);
 
 			}
+
+			$(".myButton").click( function() {
+				alert("Awesome! You have opted into buying " + JSONobj.name +"! You will be notified when " + JSONobj.seller + " has purchased the item and is ready to be picked up.");
+
+				var JSONinfo = $.cookie("manage");
+				// If have not bought any item yet
+				console.log(JSONinfo);
+				if(typeof JSONinfo === 'undefined'){
+					var manage = {};
+					manage["count"] = 1;
+
+					var item = {};
+					//item["check"] = check;
+					item["name"] = JSONobj.name;
+					item["desc"] = JSONobj.desc;
+					//item["origprice"] = origprice;
+					item["price"] = JSONobj.price;
+					item["imgsrc"] = JSONobj.imgsrc;
+					//item["minnum"] = minnum;
+					item["seller"] = JSONobj.seller;
+
+					manage["item1"] = item;
+
+					console.log(manage);
+
+					var date = new Date();
+						date.setTime(date.getTime() + (5 * 60 * 1000));
+					$.cookie("manage", JSON.stringify(manage), {expires: date});
+				}
+				else
+				{
+					var obj = JSON.parse(JSONinfo);
+					obj["count"] = obj.count + 1;
+					console.log(obj);
+
+					var item = {};
+					//item["check"] = check;
+					item["name"] = JSONobj.name;
+					item["desc"] = JSONobj.desc;
+					//item["origprice"] = origprice;
+					item["price"] = JSONobj.price;
+					item["imgsrc"] = JSONobj.imgsrc;
+					//item["minnum"] = minnum;
+					item["seller"] = JSONobj.seller;
+
+					var newitem = "item" + obj.count;
+
+					obj[newitem] = item;
+
+					var date = new Date();
+						date.setTime(date.getTime() + (5 * 60 * 1000));
+					$.cookie("manage", JSON.stringify(obj), {expires: date});
+				}
+
+				//window.location.href = "http://107.170.250.75/CSE170/frontend/items.html";
+
+			});
+
+			$("#seller").click( function() {
+				var profile = {}
+
+				profile["user"] = JSONobj.seller;
+
+				var date = new Date();
+				date.setTime(date.getTime() + (5 * 60 * 1000));
+
+				$.cookie("user", JSON.stringify(profile), { expires: date } );
+
+				window.location.href = "http://107.170.250.75/CSE170/frontend/profile.html";
+			});
 		});
 
 	</script>

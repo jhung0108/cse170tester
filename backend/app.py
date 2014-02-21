@@ -1,7 +1,7 @@
 from flask import Flask, request, session, jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
 
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 
@@ -24,7 +24,7 @@ class Item(db.Model):
   price = db.Column(db.String)
   min_buyers = db.Column(db.Integer)
   photo = db.Column(db.String) # make sure this is a url
-  def __init__(self, name, description, price, min_buyers)
+  def __init__(self, name, description, price, min_buyers):
     self.name = name
     self.description = description
     self.price = price
@@ -58,8 +58,8 @@ def is_logged_in():
 # routings
 
 @app.route('/')
-def root():
-  return app.send_static_file('index.html')
+def default():
+  return "Default API pagessss"
 
 @app.route('/signup', methods=['POST'])
 def signup():

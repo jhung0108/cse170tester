@@ -12,7 +12,7 @@ app.config(['$routeProvider',
 				controller: 'signInController'
 			}).
 			when('/Listings', {
-				templateUrl: '/add.html',
+				templateUrl: 'views/add.html',
 				controller: 'listingsController'
 			}).
 			when('/ViewProfile', {
@@ -28,7 +28,7 @@ app.config(['$routeProvider',
 				controller: 'buyController'
 			}).
 			when('/AddItem', {
-				templateUrl: '/add.html',
+				templateUrl: 'views/add.html',
 				controller: 'itemController'
 			}). 
 			otherwise({

@@ -28,7 +28,7 @@ app.config(['$routeProvider',
 				controller: 'buyController'
 			}).
 			when('/AddItem', {
-				templateUrl: 'add.html',
+				templateUrl: '/add.html',
 				controller: 'itemController'
 			}). 
 			otherwise({
